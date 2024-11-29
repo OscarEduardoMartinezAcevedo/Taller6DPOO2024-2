@@ -64,7 +64,9 @@ package "uniandes.dpoo.swing.interfaz.principal" {
         - JCheckBox chkVisitado
 
         + PanelDetallesRestaurante()
+        + actualizarRestaurante(String, int, boolean)
         + actualizarRestaurante(Restaurante)
+        + buscarIconoCalificacion(int): ImageIcon
     }
 }
 
@@ -143,4 +145,5 @@ PanelBotonesAgregar --> VentanaAgregarRestaurante
 PanelEditarRestaurante --> Restaurante
 
 Diario "1" *--> "0..*" Restaurante : contiene
+PanelDetallesRestaurante --> Restaurante
 @enduml
