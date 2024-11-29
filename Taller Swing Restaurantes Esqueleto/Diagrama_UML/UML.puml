@@ -27,7 +27,7 @@ package "uniandes.dpoo.swing.mundo" {
 }
 
 package "uniandes.dpoo.swing.interfaz.principal" {
-    class VentanaPrincipal {
+    class VentanaPrincipal extends JFrame {
         - Diario mundo
         - PanelBotones pBotones
         - PanelLista pLista
@@ -43,12 +43,12 @@ package "uniandes.dpoo.swing.interfaz.principal" {
         + cambiarRestauranteSeleccionado(Restaurante)
     }
 
-    class PanelBotones {
+    class PanelBotones extends JPanel implements ActionListener{
         - VentanaPrincipal ventanaPrincipal
         + PanelBotones(VentanaPrincipal)
     }
 
-    class PanelLista {
+    class PanelLista extends JPanel implements ListSelectionListener{
         - JList<Restaurante> listaDeRestaurantes
         - DefaultListModel<Restaurante> dataModel
         - VentanaPrincipal ventanaPrincipal
@@ -58,7 +58,7 @@ package "uniandes.dpoo.swing.interfaz.principal" {
         + seleccionarRestaurante(Restaurante)
     }
 
-    class PanelDetallesRestaurante {
+    class PanelDetallesRestaurante extends JPanel{
         - JLabel labNombre
         - JLabel labCalificacion
         - JCheckBox chkVisitado
@@ -69,7 +69,7 @@ package "uniandes.dpoo.swing.interfaz.principal" {
 }
 
 package "uniandes.dpoo.swing.interfaz.agregar" {
-    class VentanaAgregarRestaurante {
+    class VentanaAgregarRestaurante extends JFrame{
         - PanelEditarRestaurante panelDetalles
         - PanelBotonesAgregar panelBotones
         - PanelMapaAgregar panelMapa
@@ -80,7 +80,7 @@ package "uniandes.dpoo.swing.interfaz.agregar" {
         + cerrarVentana()
     }
 
-    class PanelEditarRestaurante {
+    class PanelEditarRestaurante extends JPanel{
         - String nombre
         - int calificacion
         - boolean visitado
@@ -91,18 +91,18 @@ package "uniandes.dpoo.swing.interfaz.agregar" {
         + getVisitado(): boolean
     }
 
-    class PanelBotonesAgregar {
+    class PanelBotonesAgregar extends JPanel implements ActionListener{
         - VentanaAgregarRestaurante ventanaAgregar
         + PanelBotonesAgregar(VentanaAgregarRestaurante)
     }
 
-    class PanelMapaAgregar {
+    class PanelMapaAgregar extends JPanel implements MouseListener{
         + PanelMapaAgregar()
     }
 }
 
 package "uniandes.dpoo.swing.interfaz.mapa" {
-    class VentanaMapa {
+    class VentanaMapa extends JFrame implements ActionListener{
         - static final String VISITADOS
         - static final String TODOS
         - PanelMapaVisualizar panelMapa
@@ -114,7 +114,7 @@ package "uniandes.dpoo.swing.interfaz.mapa" {
         + actionPerformed(ActionEvent)
     }
 
-    class PanelMapaVisualizar {
+    class PanelMapaVisualizar extends JPanel{
         - JLabel labMapa
         - List<Restaurante> restaurantes
 
