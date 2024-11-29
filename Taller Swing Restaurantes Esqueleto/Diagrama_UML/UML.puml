@@ -1,0 +1,146 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "uniandes.dpoo.swing.mundo" {
+    class Restaurante {
+        - String nombre
+        - int calificacion
+        - int coordenadaX
+        - int coordenadaY
+        - boolean visitado
+
+        + Restaurante(String, int, int, int, boolean)
+        + getNombre(): String
+        + getCalificacion(): int
+        + getX(): int
+        + getY(): int
+        + isVisitado(): boolean
+    }
+
+    class Diario {
+        - List<Restaurante> restaurantes
+
+        + Diario()
+        + agregarRestaurante(Restaurante)
+        + getRestaurantes(boolean): List<Restaurante>
+    }
+}
+
+package "uniandes.dpoo.swing.interfaz.principal" {
+    class VentanaPrincipal {
+        - Diario mundo
+        - PanelBotones pBotones
+        - PanelLista pLista
+        - PanelDetallesRestaurante pDetalles
+        - VentanaMapa ventanaMapa
+        - VentanaAgregarRestaurante ventanaAgregar
+
+        + VentanaPrincipal(Diario)
+        + mostrarVetanaNuevoRestaurante()
+        + mostrarVentanaMapa()
+        + agregarRestaurante(String, int, int, int, boolean)
+        + getRestaurantes(boolean): List<Restaurante>
+        + cambiarRestauranteSeleccionado(Restaurante)
+    }
+
+    class PanelBotones {
+        - VentanaPrincipal ventanaPrincipal
+        + PanelBotones(VentanaPrincipal)
+    }
+
+    class PanelLista {
+        - JList<Restaurante> listaDeRestaurantes
+        - DefaultListModel<Restaurante> dataModel
+        - VentanaPrincipal ventanaPrincipal
+
+        + PanelLista(VentanaPrincipal)
+        + actualizarLista(List<Restaurante>)
+        + seleccionarRestaurante(Restaurante)
+    }
+
+    class PanelDetallesRestaurante {
+        - JLabel labNombre
+        - JLabel labCalificacion
+        - JCheckBox chkVisitado
+
+        + PanelDetallesRestaurante()
+        + actualizarRestaurante(Restaurante)
+    }
+}
+
+package "uniandes.dpoo.swing.interfaz.agregar" {
+    class VentanaAgregarRestaurante {
+        - PanelEditarRestaurante panelDetalles
+        - PanelBotonesAgregar panelBotones
+        - PanelMapaAgregar panelMapa
+        - VentanaPrincipal ventanaPrincipal
+
+        + VentanaAgregarRestaurante(VentanaPrincipal)
+        + agregarRestaurante()
+        + cerrarVentana()
+    }
+
+    class PanelEditarRestaurante {
+        - String nombre
+        - int calificacion
+        - boolean visitado
+
+        + PanelEditarRestaurante()
+        + getNombre(): String
+        + getCalificacion(): int
+        + getVisitado(): boolean
+    }
+
+    class PanelBotonesAgregar {
+        - VentanaAgregarRestaurante ventanaAgregar
+        + PanelBotonesAgregar(VentanaAgregarRestaurante)
+    }
+
+    class PanelMapaAgregar {
+        + PanelMapaAgregar()
+    }
+}
+
+package "uniandes.dpoo.swing.interfaz.mapa" {
+    class VentanaMapa {
+        - static final String VISITADOS
+        - static final String TODOS
+        - PanelMapaVisualizar panelMapa
+        - JRadioButton radioTodos
+        - JRadioButton radioVisitados
+        - VentanaPrincipal ventanaPrincipal
+
+        + VentanaMapa(VentanaPrincipal, List<Restaurante>)
+        + actionPerformed(ActionEvent)
+    }
+
+    class PanelMapaVisualizar {
+        - JLabel labMapa
+        - List<Restaurante> restaurantes
+
+        + PanelMapaVisualizar()
+        + actualizarMapa(List<Restaurante>)
+        + paint(Graphics)
+    }
+}
+
+' Relaciones entre las clases
+VentanaPrincipal --> PanelBotones
+VentanaPrincipal --> PanelLista
+VentanaPrincipal --> PanelDetallesRestaurante
+VentanaPrincipal --> VentanaMapa
+VentanaPrincipal --> VentanaAgregarRestaurante
+
+VentanaAgregarRestaurante --> PanelEditarRestaurante
+VentanaAgregarRestaurante --> PanelBotonesAgregar
+VentanaAgregarRestaurante --> PanelMapaAgregar
+
+VentanaMapa --> PanelMapaVisualizar
+
+PanelLista --> VentanaPrincipal
+PanelBotones --> VentanaPrincipal
+PanelBotonesAgregar --> VentanaAgregarRestaurante
+PanelEditarRestaurante --> Restaurante
+
+Diario "1" *--> "0..*" Restaurante : contiene
+@enduml
